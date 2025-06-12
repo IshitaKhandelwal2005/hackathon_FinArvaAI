@@ -460,29 +460,28 @@
 }
 
 @media (max-width: 768px) {
+  .training-content-new {
+    flex-direction: column !important;
+    gap: 12px;
+  }
+  .training-column {
+    width: 100% !important;
+    margin-top: 0 !important;
+    height: auto !important;
+  }
+  .page-section, .training-section-new {
+    padding: 10px 5px !important;
+    border-radius: 8px !important;
+    margin-bottom: 16px !important;
+  }
   .page-header-info {
-    flex-direction: column;
-    gap: 10px;
-    align-items: center;
-    padding: 0 5px;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px;
+    padding: 0 4px !important;
   }
   .product-title-top-left {
-    font-size: clamp(1rem, 5vw, 1.5em);
-  }
-  .page-section {
-    padding: 20px 10px;
-  }
-  .training-section-new {
-    padding: 15px;
-  }
-  .training-header {
-    flex-direction: column;
-    gap: 15px;
-    margin-bottom: 25px;
-  }
-  .training-title-main {
-    font-size: clamp(1rem, 10vw, 2em);
-    text-align: center;
+    font-size: 1.1rem !important;
   }
   .action-button, .ai-training-bot-button {
     font-size: clamp(0.95rem, 3vw, 1em);
@@ -500,6 +499,16 @@
   .previous-stage,
   .next-stage {
     opacity: 1 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-section, .training-section-new {
+    padding: 4px 2px !important;
+    font-size: 0.95rem !important;
+  }
+  .product-title-top-left {
+    font-size: 1rem !important;
   }
 }
 

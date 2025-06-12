@@ -2,7 +2,7 @@
 const config = {
   // API Configuration
   api: {
-    baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5002',
+    baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5003',
     timeout: 10000, // 10 seconds
     endpoints: {
       auth: {

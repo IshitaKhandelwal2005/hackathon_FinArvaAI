@@ -387,6 +387,9 @@ const EnhancedConversation = () => {
           }
         }
 
+        console.log('Interim Transcript:', interimTranscript);
+        console.log('Final Transcript (accumulated):', finalTranscript);
+
         if (interimTranscript) {
           const userMessage = {
             sender: 'agent',
@@ -433,7 +436,9 @@ const EnhancedConversation = () => {
 
       recognition.onerror = (event) => {
         console.error('Speech recognition error:', event.error);
-        if (event.error === 'no-speech') {
+        if (event.error === 'not-allowed') {
+          toast.error('Microphone access denied. Please enable microphone in your browser settings to use speech recognition.');
+        } else if (event.error === 'no-speech') {
           if (!isEndedByUser) {
             listen(); // Restart listening on no-speech error
           }
@@ -813,8 +818,8 @@ const EnhancedConversation = () => {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Paper elevation={3} sx={{ p: 4 }}>
+    <Container maxWidth="lg" sx={{ py: 4, px: { xs: 0.5, sm: 2 } }}>
+      <Paper elevation={3} sx={{ p: { xs: 1, sm: 4 }, borderRadius: { xs: 2, sm: 4 }, width: '100%', overflowX: 'auto' }}>
         {/* Header */}
         <Box display="flex" alignItems="center" justifyContent="space-between" mb={3}>
           <Box display="flex" alignItems="center" gap={2}>
@@ -1262,7 +1267,7 @@ const EnhancedConversation = () => {
             }
           </Typography>
         </DialogTitle>
-        <DialogContent sx={{ p: 4 }}>
+        <DialogContent sx={{ px: { xs: 1, sm: 3 }, py: { xs: 1, sm: 3 } }}>
           <Grid container spacing={0} direction="column" sx={{ mt: 1, alignItems: 'flex-start', width: '100%' }}>
             {/* Difficulty Level Section */}
             <Grid item xs={12} sx={{ mb: 2, width: '100%' }}>

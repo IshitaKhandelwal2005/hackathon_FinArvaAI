@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import './IntermediatePage.css'; // We'll create this CSS file next
-import TopRightIcon from '../components/TopRightIcon';
+// import TopRightIcon from '../components/TopRightIcon';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import VideoGallery from '../components/VideoGallery'; // Import VideoGallery
@@ -167,7 +167,7 @@ const IntermediatePage = (props) => {
             >
               Explore more
             </button>
-            <TopRightIcon />
+            {/* <TopRightIcon /> */}
           </div>
         </div>
 

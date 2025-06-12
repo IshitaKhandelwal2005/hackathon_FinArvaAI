@@ -37,7 +37,7 @@ const PageWrapper = styled.div`
 const HeroSection = styled.div`
   background: linear-gradient(135deg, #1E3A8A 0%, #2B52DD 100%);
   color: white;
-  padding: 6rem 0;
+  padding: 5rem 0;
   position: relative;
   overflow: hidden;
 
@@ -64,6 +64,10 @@ const HeroSection = styled.div`
     pointer-events: none;
     z-index: 1;
   }
+
+  @media (max-width: 600px) {
+    padding: 3rem 0;
+  }
 `;
 
 const HeroContent = styled.div`
@@ -71,39 +75,45 @@ const HeroContent = styled.div`
   z-index: 2;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
+
+  @media (max-width: 600px) {
+    padding: 0.5rem;
+    gap: 0.5rem;
+  }
 `;
 
 const ButtonContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  padding-right: 10%;
+  padding-right: 0;
 
-  @media (max-width: 768px) {
-    justify-content: center;
-    padding-right: 0;
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
   }
 `;
 
 const WelcomeMessage = styled.div`
   text-align: center;
-  padding: 2rem;
+  padding: 1rem;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 2rem;
   backdrop-filter: blur(10px);
-  max-width: 800px;
+  max-width: 100%;
   width: 100%;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.1);
   
   h2 {
-    font-size: 3rem;
+    font-size: 2rem;
     font-weight: 700;
     margin: 0;
     background: linear-gradient(135deg, #FFFFFF 0%, #E0E7FF 100%);
@@ -112,8 +122,8 @@ const WelcomeMessage = styled.div`
     line-height: 1.2;
     letter-spacing: -0.02em;
 
-    @media (max-width: 768px) {
-      font-size: 2rem;
+    @media (max-width: 600px) {
+      font-size: 1.2rem;
     }
   }
 `;
@@ -176,6 +186,11 @@ const ProductOptionGrid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
   margin-top: 1rem;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
 `;
 
 const ProductOption = styled.button`

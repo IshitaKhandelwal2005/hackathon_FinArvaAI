@@ -69,7 +69,7 @@ A MERN stack application designed to help loan agents practice and improve their
 4. **Environment Setup**
    - Create a `.env` file in the server directory:
      ```
-     PORT=5002
+     PORT=5003
      MONGO_URI=your_mongodb_connection_string
      JWT_SECRET=your_jwt_secret
      NODE_ENV=development
@@ -80,7 +80,7 @@ A MERN stack application designed to help loan agents practice and improve their
      ```
    - Create a `.env` file in the client directory:
      ```
-     REACT_APP_API_URL=http://localhost:5002
+     REACT_APP_API_URL=http://localhost:5003
      ```
 
 5. **Start the development servers**
@@ -96,7 +96,7 @@ A MERN stack application designed to help loan agents practice and improve their
 
 6. **Open your browser**
    - Frontend: http://localhost:3000
-   - API Server: http://localhost:5002
+   - API Server: http://localhost:5003
    - LM Studio: http://localhost:1234
 
 ## Usage

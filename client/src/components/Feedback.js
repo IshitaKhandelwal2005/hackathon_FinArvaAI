@@ -224,12 +224,12 @@ const SuggestionText = styled.p`
   }
 `;
 
-const Feedback = () => {
+const Feedback = ({ feedbackFromState }) => {
   const { conversationId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const [feedback, setFeedback] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [feedback, setFeedback] = useState(feedbackFromState || null);
+  const [loading, setLoading] = useState(!feedbackFromState);
   const [error, setError] = useState(null);
   const [lastScore, setLastScore] = useState(null);
 
@@ -265,6 +265,11 @@ const Feedback = () => {
   ];
 
   useEffect(() => {
+    if (feedbackFromState) {
+      setFeedback(feedbackFromState);
+      setLoading(false);
+      return;
+    }
     const fetchFeedback = async () => {
       try {
         // Get the last conversation score
