@@ -15,6 +15,7 @@ import {
 } from 'react-bootstrap';
 import { FaArrowLeft, FaChartLine, FaClock, FaStar } from 'react-icons/fa';
 import { useConversation } from '../context/ConversationContext';
+import './History.css';
 
 const History = () => {
   const [sessions, setSessions] = useState([]);
@@ -154,8 +155,8 @@ const History = () => {
   }
 
   return (
-    <Container>
-      <Row className="mb-4">
+    <Container fluid className="px-0">
+      <Row className="mb-4 my-0">
         <Col>
           <h2>Session History</h2>
         </Col>
@@ -266,8 +267,8 @@ const History = () => {
       </Modal>
 
       {sessions.length === 0 ? (
-        <Card>
-          <Card.Body className="text-center py-5">
+        <Card style={{ maxWidth: '900px', margin: '0 auto' }}>
+          <Card.Body className="text-center" style={{ padding: '20px' }}>
             <h4>No sessions found</h4>
             <p className="text-muted">Start a new conversation to begin training!</p>
             <Button variant="primary" onClick={() => navigate('/intermediate/personal-loan')}>
@@ -277,45 +278,47 @@ const History = () => {
         </Card>
       ) : (
         <>
-          <Card>
-            <Table responsive hover className="mb-0">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Scenario</th>
-                  <th>Status</th>
-                  <th>Rating</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {sessions.map((session) => (
-                  <tr key={session._id}>
-                    <td>{formatDate(session.createdAt)}</td>
-                    <td>{getScenarioName(session.scenario)}</td>
-                    <td>
-                      <Badge bg={session.isCompleted ? 'success' : 'warning'}>
-                        {session.isCompleted ? 'Completed' : 'In Progress'}
-                      </Badge>
-                    </td>
-                    <td>{renderRating(session.feedback?.rating)}</td>
-                    <td>
-                      <Button
-                        variant="outline-primary"
-                        size="sm"
-                        onClick={() => navigate(`/feedback/${session._id}`)}
-                      >
-                        View Details
-                      </Button>
-                    </td>
+          <Card style={{ maxWidth: '900px', margin: '0 auto' }}>
+            <Card.Body className="p-0">
+              <Table responsive hover>
+                <thead>
+                  <tr>
+                    <th style={{ width: '20%' }}>Date</th>
+                    <th style={{ width: '25%' }}>Scenario</th>
+                    <th style={{ width: '15%', textAlign: 'center' }}>Status</th>
+                    <th style={{ width: '10%', textAlign: 'center' }}>Rating</th>
+                    <th style={{ width: '30%', textAlign: 'center' }}>Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </Table>
+                </thead>
+                <tbody>
+                  {sessions.map((session) => (
+                    <tr key={session._id}>
+                      <td>{formatDate(session.createdAt)}</td>
+                      <td>{getScenarioName(session.scenario)}</td>
+                      <td style={{ textAlign: 'center' }}>
+                        <Badge bg={session.isCompleted ? 'success' : 'warning'} className="badge-custom-small">
+                          {session.isCompleted ? 'Completed' : 'In Progress'}
+                        </Badge>
+                      </td>
+                      <td style={{ textAlign: 'center' }}>{renderRating(session.feedback?.rating)}</td>
+                      <td style={{ textAlign: 'center' }}>
+                        <Button
+                          variant="outline-primary"
+                          size="sm"
+                          onClick={() => navigate(`/feedback/${session._id}`)}
+                        >
+                          View Details
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </Card.Body>
           </Card>
 
           {pagination.pages > 1 && (
-            <div className="d-flex justify-content-center mt-4">
+            <div className="d-flex justify-content-center mt-4" >
               <Pagination>
                 <Pagination.First
                   disabled={pagination.page === 1}

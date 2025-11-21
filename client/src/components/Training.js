@@ -120,30 +120,23 @@ const Training = () => {
   const handleEndTraining = async () => {
     try {
       if (window.confirm('Are you sure you want to end this training session?')) {
-        console.log('Ending conversation...');
         setLoading(true);
-        
         const result = await endConversation();
-        console.log('End conversation result:', result);
-        
         if (result.success && result.data) {
-          const { conversationId } = result.data;
-          console.log('Navigating to feedback page for conversation:', conversationId);
-          // Redirect to feedback page with conversation data
+          const { conversationId, feedback } = result.data;
           navigate(`/feedback/${conversationId}`, {
             state: {
               customerProfile,
               scenario: scenarioId,
-              category: category
+              category: category,
+              feedback: feedback
             }
           });
         } else {
-          console.error('Failed to end conversation:', result.error);
           setError('Failed to end training session. Please try again.');
         }
       }
     } catch (err) {
-      console.error('Error ending training:', err);
       setError('An error occurred while ending the training session.');
     } finally {
       setLoading(false);

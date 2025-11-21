@@ -21,7 +21,10 @@
   --gray-900: #212529;
 }
 
-/* Typography */
+html {
+  font-size: 16px;
+}
+
 body {
   margin: 0;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -32,20 +35,32 @@ body {
   color: var(--gray-800);
   line-height: 1.6;
   background-color: var(--gray-100);
-  font-size: clamp(1rem, 2vw, 1.2rem);
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 600;
-  line-height: 1.3;
-  margin-bottom: 1rem;
-  color: var(--dark);
-  font-size: clamp(1.5rem, 3vw, 2.5rem);
-}
-
-p {
-  margin-bottom: 1rem;
   font-size: clamp(1rem, 2vw, 1.15rem);
+  overflow-x: hidden;
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+}
+h2 {
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+h3 {
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+h4, h5, h6 {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+p, li, label, input, button, select, textarea {
+  font-size: clamp(1rem, 2vw, 1.1rem);
 }
 
 a {
@@ -178,23 +193,62 @@ a:hover {
   background: var(--gray-500);
 }
 
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-  .container {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-  
-  .message-ai, .message-user {
-    max-width: 90%;
-  }
+/* Responsive containers */
+.container, .min-vh-80, .page-section, .card, .training-section-new, .learning-section {
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
+/* Responsive images */
+img, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Responsive tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow-x: auto;
+  display: block;
+}
+th, td {
+  word-break: break-word;
+  padding: 0.5em;
+}
+
+/* Utility classes for mobile/desktop visibility */
+.hide-mobile { display: block; }
+.hide-desktop { display: none; }
+@media (max-width: 900px) {
+  .hide-mobile { display: none !important; }
+  .hide-desktop { display: block !important; }
+}
+
+/* Remove horizontal scroll on body */
+body { overflow-x: hidden; }
+
+@media (max-width: 1200px) {
+  h1 { font-size: clamp(1.7rem, 5vw, 2.2rem); }
+  h2 { font-size: clamp(1.3rem, 4vw, 1.7rem); }
+  h3 { font-size: clamp(1.1rem, 3vw, 1.3rem); }
+}
+@media (max-width: 900px) {
+  h1 { font-size: clamp(1.4rem, 6vw, 1.7rem); }
+  h2 { font-size: clamp(1.1rem, 4vw, 1.3rem); }
+  h3 { font-size: clamp(1rem, 3vw, 1.1rem); }
+  .container, .page-section, .card { padding-left: 0.5rem; padding-right: 0.5rem; }
+}
 @media (max-width: 600px) {
-  h1, h2, h3, h4, h5, h6 {
-    font-size: clamp(1.2rem, 4vw, 1.8rem);
-  }
-  p, body {
-    font-size: clamp(0.95rem, 3vw, 1.1rem);
-  }
+  h1 { font-size: 1.2rem; }
+  h2 { font-size: 1rem; }
+  h3 { font-size: 0.95rem; }
+  p, li, label, input, button, select, textarea { font-size: 0.95rem; }
+  .container, .page-section, .card { padding-left: 0.25rem; padding-right: 0.25rem; }
+}
+
+/* Ensure all elements use border-box for easier sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
 }

@@ -12,14 +12,4 @@
   cursor: default; /* Or pointer if it's clickable */
 }
 
-.leaf-icon {
-  color: #28a745; /* Green color for the leaf */
-  font-size: 1.5em; /* Adjust size as needed */
-  margin-right: 8px;
-}
-
-.icon-count {
-  font-size: 1em; /* Adjust size as needed */
-  font-weight: bold;
-  color: #333333;
-} 
+/* .leaf-icon and .icon-count styles removed as the streak UI is gone */ 

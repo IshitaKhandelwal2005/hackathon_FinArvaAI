@@ -14,10 +14,9 @@ const mongoose = require('mongoose');
 // Import routes
 const conversationRoutes = require('./routes/conversation');
 const authRoutes = require('./routes/auth');
-const streakRoutes = require('./routes/streakRoutes');
 
 const app = express();
-const PORT = process.env.PORT || 5002;
+const PORT = process.env.PORT || 5003;
 
 // Middleware
 app.use(cors({
@@ -75,7 +74,6 @@ const initializeServer = async () => {
   // Routes
   app.use('/api/auth', authRoutes);
   app.use('/api/conversations', conversationRoutes);
-  app.use('/api/streak', streakRoutes);
   // Add user routes for difficulty/level update
   app.use('/api', require('./routes/user'));
 
