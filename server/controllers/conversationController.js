@@ -1,6 +1,6 @@
-const { Groq } = require("groq-sdk");
 const Conversation = require('../models/Conversation');
 const config = require('../config/groq'); // Use Groq config
+const localLLM = require('../llm/localLLM');
 
 // Helper function to create system prompt for loan agent training
 const createSystemPrompt = (scenario, difficulty, additionalInfo) => {
@@ -49,10 +49,7 @@ const getCustomerInitialMessage = (scenario) => {
   return generalMessages[scenario] || `Hi, I'm interested in ${scenario} and could use some guidance. Could you explain things in simple terms?`;
 };
 
-// Initialize Groq client
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
-});
+// Using local LLM simulator instead of external Groq client
 
 // @desc    Start a new conversation with Groq
 // @route   POST /api/conversations/start
@@ -159,8 +156,32 @@ exports.sendMessage = async (req, res) => {
       { role: 'system', content: systemPrompt }
     ];
     
-    // Add conversation history (last 8 messages to keep context manageable, excluding the new agent message)
-    const recentMessages = conversation.messages.slice(-9, -1); // Exclude the just-added agent message
+    // Add conversation history (keep a longer rolling window but exclude the just-added agent message)
+    const HISTORY_WINDOW = 12;
+    const startIndex = Math.max(conversation.messages.length - (HISTORY_WINDOW + 1), 0);
+    const recentMessages = conversation.messages.slice(startIndex, conversation.messages.length - 1);
+
+    // Build a lightweight transcript for the system prompt so the LLM knows what was already discussed
+    const conversationContextText = recentMessages.length
+      ? recentMessages
+          .map(msg => `${msg.sender === 'agent' ? 'Loan Agent' : 'Customer'}: ${msg.content}`)
+          .join('\n')
+      : 'Conversation just started. The customer has not provided details yet.';
+
+    const antiRepeatInstructions = `
+Conversation context so far (oldest to newest):
+${conversationContextText}
+
+Memory & freshness rules:
+- Do not repeat a question or request that was already asked earlier in this chat.
+- If the loan agent already answered a question, acknowledge the answer and drive the conversation forward with a new, related follow-up.
+- Reference the agent's most recent reply before asking something new so the dialogue feels natural.
+- Vary wording and keep the conversation progressing toward a decision.`.trim();
+
+    messagesForLLM[0] = {
+      role: 'system',
+      content: `${messagesForLLM[0].content}\n\n${antiRepeatInstructions}`
+    };
     for (const msg of recentMessages) {
       if (msg.sender === 'agent') {
         messagesForLLM.push({ role: 'user', content: msg.content });
@@ -186,7 +207,7 @@ exports.sendMessage = async (req, res) => {
     // Call Groq API
     let customerResponse;
     try {
-      const response = await groq.chat.completions.create({
+      const response = await localLLM.chat.completions.create({
         model: config.GROQ_MODEL,
         messages: messagesForLLM,
         temperature: config.TEMPERATURE,
@@ -411,7 +432,7 @@ Calculate overallScore as the average of the 3 category scores.
 Return only the valid JSON object. No extra explanation or commentary.`;
 
     try {
-      const response = await groq.chat.completions.create({
+      const response = await localLLM.chat.completions.create({
         model: config.GROQ_MODEL,
         messages: [
           { role: 'system', content: 'You are an expert sales coach providing detailed feedback on loan agent training conversations.' },

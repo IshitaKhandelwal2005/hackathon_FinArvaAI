@@ -4,7 +4,6 @@
     "@emotion/styled": "^11.14.0",
     "@mui/material": "^7.1.0",
     "framer-motion": "^12.15.0",
-    "groq-sdk": "^0.23.0",
     "nodemon": "^3.1.10"
   }
 }

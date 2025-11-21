@@ -117,21 +117,23 @@ export const ConversationProvider = ({ children }) => {
       setError(null);
       console.log('Ending conversation:', conversation?.id);
 
-      const response = await conversationAPI.endConversation(conversation.id);
+      // Capture id before mutating state
+      const convId = conversation.id;
+      const response = await conversationAPI.endConversation(convId);
       console.log('End conversation response:', response);
+
+      // Navigate to feedback page only after successful server response
+      navigate(`/feedback/${convId}`);
 
       // Clear the conversation state
       setConversation(null);
       setMessages([]);
 
-      // Navigate to feedback page
-      navigate(`/feedback/${conversation.id}`);
-
       return {
         success: true,
         data: {
-          conversationId: conversation.id,
-          feedback: response.data.feedback
+          conversationId: convId,
+          feedback: response.data?.feedback
         }
       };
     } catch (err) {
